@@ -1,6 +1,18 @@
 class MarvelService {
   _apiBase = 'https://gateway.marvel.com:443/v1/public/'
+
   _apiKey = 'apikey=23c90e69b415b3efe1b9220eca93562b'
+
+  _transformChar = (char) => ({
+    name: char.name,
+    description:
+      char.description.length > 220
+        ? `${char.description.slice(0, 220)}...`
+        : char.description,
+    thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
+    homepage: char.urls[1].url,
+    wiki: char.urls[0].url,
+  })
 
   getResources = async (url) => {
     const response = await fetch(url)
@@ -11,11 +23,19 @@ class MarvelService {
     return result
   }
 
-  getAllCharacters = () =>
-    this.getResources(`${this._apiBase}characters?${this._apiKey}`)
+  getAllCharacters = async () => {
+    const res = await this.getResources(
+      `${this._apiBase}characters?${this._apiKey}`
+    )
+    return res.data.results.map(this._transformChar)
+  }
 
-  getCharacter = (id) =>
-    this.getResources(`${this._apiBase}characters/${id}?${this._apiKey}`)
+  getCharacter = async (id) => {
+    const res = await this.getResources(
+      `${this._apiBase}characters/${id}?${this._apiKey}`
+    )
+    return this._transformChar(res.data.results[0])
+  }
 }
 
 export default MarvelService
