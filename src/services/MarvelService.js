@@ -6,8 +6,8 @@ class MarvelService {
   _transformChar = (char) => ({
     name: char.name,
     description:
-      char.description.length > 220
-        ? `${char.description.slice(0, 220)}...`
+      char.description.length > 210
+        ? `${char.description.slice(0, 210)}...`
         : char.description,
     thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
     homepage: char.urls[1].url,
@@ -17,7 +17,7 @@ class MarvelService {
   getResources = async (url) => {
     const response = await fetch(url)
     if (!response.ok) {
-      throw new Error(`&&&Could not fetch ${url}, status: ${response.status}`)
+      throw new Error(`?Could not fetch ${url}, status: ${response.status}`)
     }
     const result = await response.json()
     return result
@@ -34,6 +34,7 @@ class MarvelService {
     const res = await this.getResources(
       `${this._apiBase}characters/${id}?${this._apiKey}`
     )
+
     return this._transformChar(res.data.results[0])
   }
 }
