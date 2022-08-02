@@ -1,20 +1,21 @@
 import { Component } from 'react'
 import MarvelService from '../../services/MarvelService'
+
 import Spinner from '../loadingStatus/spinner/Spinner'
 import LoadError from '../loadingStatus/error/Error'
+import CharView from '../charView/CharView'
 
 import mjolnir from '../../resources/img/mjolnir.png'
 import './randomChar.scss'
 
 class RandomChar extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      char: {},
-      loading: true,
-      error: false,
-    }
+  state = {
+    char: {},
+    loading: true,
+    error: false,
+  }
 
+  componentDidMount() {
     this.updateChar()
   }
 
@@ -42,11 +43,19 @@ class RandomChar extends Component {
     console.error(err)
   }
 
+  onRandomChar = () => {
+    this.setState({
+      loading: true,
+      error: false,
+    })
+    this.updateChar()
+  }
+
   render() {
     const { char, loading, error } = this.state
     const spinner = loading ? <Spinner /> : null
     const loadError = error ? <LoadError /> : null
-    const content = loading || error ? null : <View char={char} />
+    const content = loading || error ? null : <CharView char={char} />
 
     return (
       <div className="randomchar">
@@ -60,7 +69,11 @@ class RandomChar extends Component {
             Do you want to get to know him better?
           </p>
           <p className="randomchar__title">Or choose another one</p>
-          <button type="button" className="button button__main">
+          <button
+            type="button"
+            className="button button__main"
+            onClick={this.onRandomChar}
+          >
             <div className="inner">try it</div>
           </button>
           <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
@@ -68,30 +81,6 @@ class RandomChar extends Component {
       </div>
     )
   }
-}
-
-const View = ({ char }) => {
-  const { name, description, thumbnail, homepage, wiki } = char
-
-  return (
-    <div className="randomchar__block">
-      <img src={thumbnail} alt="Random character" className="randomchar__img" />
-      <div className="randomchar__info">
-        <p className="randomchar__name">{name}</p>
-        <p className="randomchar__descr">
-          {description || 'There is no description for this character'}
-        </p>
-        <div className="randomchar__btns">
-          <a href={homepage} className="button button__main">
-            <div className="inner">homepage</div>
-          </a>
-          <a href={wiki} className="button button__secondary">
-            <div className="inner">Wiki</div>
-          </a>
-        </div>
-      </div>
-    </div>
-  )
 }
 
 export default RandomChar

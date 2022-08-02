@@ -4,6 +4,7 @@ class MarvelService {
   _apiKey = 'apikey=23c90e69b415b3efe1b9220eca93562b'
 
   _transformChar = (char) => ({
+    id: char.id,
     name: char.name,
     description:
       char.description.length > 210
@@ -25,7 +26,7 @@ class MarvelService {
 
   getAllCharacters = async () => {
     const res = await this.getResources(
-      `${this._apiBase}characters?${this._apiKey}`
+      `${this._apiBase}characters?limit=9&${this._apiKey}`
     )
     return res.data.results.map(this._transformChar)
   }
