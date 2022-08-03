@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client'
-import App from './components/app/App'
+import App from './components/App/App'
 
 import './style/style.scss'
 

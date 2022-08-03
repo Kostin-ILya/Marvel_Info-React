@@ -1,9 +1,9 @@
 import { Component } from 'react'
 
-import CharListItem from '../charListItem/CharListItem'
+import CharListItem from './Item/CharListItem'
 import MarvelService from '../../services/MarvelService'
-import Spinner from '../loadingStatus/spinner/Spinner'
-import LoadError from '../loadingStatus/error/Error'
+import Spinner from '../loadingStatus/Spinner/Spinner'
+import LoadError from '../loadingStatus/LoadError/LoadError'
 
 import './charList.scss'
 
@@ -47,6 +47,9 @@ class CharList extends Component {
           name={name}
           thumbnail={thumbnail}
           imgStyle={imgStyle}
+          onCharSelected={() => {
+            this.props.onCharSelected(id)
+          }}
         />
       )
     })

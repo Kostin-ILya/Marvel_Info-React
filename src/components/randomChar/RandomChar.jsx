@@ -1,9 +1,9 @@
 import { Component } from 'react'
 import MarvelService from '../../services/MarvelService'
 
-import Spinner from '../loadingStatus/spinner/Spinner'
-import LoadError from '../loadingStatus/error/Error'
-import CharView from '../charView/CharView'
+import Spinner from '../loadingStatus/Spinner/Spinner'
+import LoadError from '../loadingStatus/LoadError/LoadError'
+import CharView from '../CharView/CharView'
 
 import mjolnir from '../../resources/img/mjolnir.png'
 import './randomChar.scss'
@@ -15,15 +15,16 @@ class RandomChar extends Component {
     error: false,
   }
 
+  marvelService = new MarvelService()
+
   componentDidMount() {
     this.updateChar()
   }
 
   updateChar = () => {
-    const marvelService = new MarvelService()
     const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
 
-    marvelService
+    this.marvelService
       .getCharacter(id)
       .then((res) => {
         this.onCharLoaded(res)

@@ -11,6 +11,7 @@ class MarvelService {
         ? `${char.description.slice(0, 210)}...`
         : char.description,
     thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
+    comics: char.comics.items,
     homepage: char.urls[1].url,
     wiki: char.urls[0].url,
   })
@@ -26,7 +27,7 @@ class MarvelService {
 
   getAllCharacters = async () => {
     const res = await this.getResources(
-      `${this._apiBase}characters?limit=9&${this._apiKey}`
+      `${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`
     )
     return res.data.results.map(this._transformChar)
   }
