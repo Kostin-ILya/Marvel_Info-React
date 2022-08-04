@@ -1,6 +1,5 @@
 import { Component } from 'react'
 
-import CharListItem from './Item/CharListItem'
 import MarvelService from '../../services/MarvelService'
 import Spinner from '../loadingStatus/Spinner/Spinner'
 import LoadError from '../loadingStatus/LoadError/LoadError'
@@ -42,15 +41,17 @@ class CharList extends Component {
         : null
 
       return (
-        <CharListItem
+        <li
+          className="char__item"
           key={id}
-          name={name}
-          thumbnail={thumbnail}
-          imgStyle={imgStyle}
-          onCharSelected={() => {
+          role="presentation"
+          onClick={() => {
             this.props.onCharSelected(id)
           }}
-        />
+        >
+          <img src={thumbnail} alt={name} style={imgStyle} />
+          <div className="char__name">{name}</div>
+        </li>
       )
     })
     return <ul className="char__grid">{chars}</ul>

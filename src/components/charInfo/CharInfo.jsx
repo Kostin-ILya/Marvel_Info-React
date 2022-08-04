@@ -10,7 +10,6 @@ import './charInfo.scss'
 class CharInfo extends Component {
   state = {
     char: null,
-    skeleton: true,
     loading: false,
     error: false,
   }
@@ -19,6 +18,7 @@ class CharInfo extends Component {
 
   componentDidMount() {
     this.updateChar()
+    // Если мы передадим начального charId через пропсов , то он отрисуется
   }
 
   componentDidUpdate(prevProps) {
@@ -38,28 +38,29 @@ class CharInfo extends Component {
   }
 
   charLoading = () => {
-    this.setState({ loading: true })
+    this.setState({ loading: true, error: false })
   }
 
   onCharLoaded = (char) => {
-    this.setState({ char, skeleton: false, loading: false })
+    this.setState({ char, loading: false })
   }
 
   onLoadError = (err) => {
-    this.setState({ error: true, skeleton: false, loading: false })
+    this.setState({ error: true, loading: false })
     console.error(err)
   }
 
   render() {
-    const { char, skeleton, loading, error } = this.state
-    const skeletonBlock = skeleton ? <Skeleton /> : null
+    const { char, loading, error } = this.state
+
+    const skeleton = char || loading || error ? null : <Skeleton />
     const spinner = loading ? <Spinner /> : null
     const loadError = error ? <LoadError /> : null
     const content = loading || error || skeleton ? null : <View char={char} />
 
     return (
       <div className="char__info">
-        {skeletonBlock}
+        {skeleton}
         {spinner}
         {loadError}
         {content}
@@ -75,25 +76,19 @@ const View = ({ char }) => {
     ? { objectFit: 'initial' }
     : null
 
-  let comicsBlock = null
-  if (comics.length !== 0) {
+  function createComics() {
     if (comics.length > 10) {
-      comicsBlock = [...comics].splice(0, 10).map((item, i) => {
-        return (
-          <li className="char__comics-item" key={i}>
-            {item.name}
-          </li>
-        )
-      })
-    } else {
-      comicsBlock = comics.map((item, i) => {
-        return (
-          <li className="char__comics-item" key={i}>
-            {item.name}
-          </li>
-        )
-      })
+      return [...comics].splice(0, 10).map((item) => (
+        <li className="char__comics-item" key={item.name}>
+          {item.name}
+        </li>
+      ))
     }
+    return comics.map((item) => (
+      <li className="char__comics-item" key={item.name}>
+        {item.name}
+      </li>
+    ))
   }
 
   return (
@@ -115,11 +110,9 @@ const View = ({ char }) => {
       <div className="char__descr">{description}</div>
       <div className="char__comics">Comics:</div>
       <ul className="char__comics-list">
-        {comicsBlock ? (
-          comicsBlock
-        ) : (
-          <span>There is no comics for this character</span>
-        )}
+        {comics.length !== 0
+          ? createComics()
+          : 'There is no comics for this character'}
       </ul>
     </>
   )

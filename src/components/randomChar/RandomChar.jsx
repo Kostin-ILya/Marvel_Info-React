@@ -3,7 +3,6 @@ import MarvelService from '../../services/MarvelService'
 
 import Spinner from '../loadingStatus/Spinner/Spinner'
 import LoadError from '../loadingStatus/LoadError/LoadError'
-import CharView from '../CharView/CharView'
 
 import mjolnir from '../../resources/img/mjolnir.png'
 import './randomChar.scss'
@@ -24,6 +23,7 @@ class RandomChar extends Component {
   updateChar = () => {
     const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
 
+    this.charLoading()
     this.marvelService
       .getCharacter(id)
       .then((res) => {
@@ -35,6 +35,10 @@ class RandomChar extends Component {
     //   .then(this.onCharLoaded) - идентичная запись. res автоматом передается в виде аргумента в метод
   }
 
+  charLoading = () => {
+    this.setState({ loading: true, error: false })
+  }
+
   onCharLoaded = (char) => {
     this.setState({ char, loading: false })
   }
@@ -44,19 +48,11 @@ class RandomChar extends Component {
     console.error(err)
   }
 
-  onRandomChar = () => {
-    this.setState({
-      loading: true,
-      error: false,
-    })
-    this.updateChar()
-  }
-
   render() {
     const { char, loading, error } = this.state
     const spinner = loading ? <Spinner /> : null
     const loadError = error ? <LoadError /> : null
-    const content = loading || error ? null : <CharView char={char} />
+    const content = loading || error ? null : <View char={char} />
 
     return (
       <div className="randomchar">
@@ -73,7 +69,7 @@ class RandomChar extends Component {
           <button
             type="button"
             className="button button__main"
-            onClick={this.onRandomChar}
+            onClick={this.updateChar}
           >
             <div className="inner">try it</div>
           </button>
@@ -82,6 +78,39 @@ class RandomChar extends Component {
       </div>
     )
   }
+}
+
+const View = ({ char }) => {
+  const { name, description, thumbnail, homepage, wiki } = char
+
+  const imgStyle = thumbnail.includes('image_not_available')
+    ? { objectFit: 'initial' }
+    : null
+
+  return (
+    <div className="randomchar__block">
+      <img
+        src={thumbnail}
+        alt="Random character"
+        className="randomchar__img"
+        style={imgStyle}
+      />
+      <div className="randomchar__info">
+        <p className="randomchar__name">{name}</p>
+        <p className="randomchar__descr">
+          {description || 'There is no description for this character'}
+        </p>
+        <div className="randomchar__btns">
+          <a href={homepage} className="button button__main">
+            <div className="inner">homepage</div>
+          </a>
+          <a href={wiki} className="button button__secondary">
+            <div className="inner">Wiki</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default RandomChar
