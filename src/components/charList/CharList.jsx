@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import MarvelService from '../../services/MarvelService'
@@ -9,6 +9,8 @@ import './charList.scss'
 
 class CharList extends Component {
   state = { charList: [], loading: true, error: false }
+
+  charItemsRefs = React.createRef()
 
   componentDidMount() {
     this.updateCharList()
@@ -35,6 +37,21 @@ class CharList extends Component {
     console.error(err)
   }
 
+  onCharFocus = (e) => {
+    const charItems = [...this.charItemsRefs.current.children]
+    charItems.forEach((item) => {
+      item.classList.remove('char__item_selected')
+    })
+    e.target.classList.add('char__item_selected')
+  }
+
+  keyDownCharItem = (e) => {
+    if (e.code === 'Space' || e.code === 'Enter' || e.code === 'NumpadEnter') {
+      e.preventDefault()
+      e.target.click()
+    }
+  }
+
   createCharListItems = (charListArr) => {
     const chars = charListArr.map(({ id, name, thumbnail }) => {
       const imgStyle = thumbnail.includes('image_not_available')
@@ -43,9 +60,12 @@ class CharList extends Component {
 
       return (
         <li
-          className="char__item"
           key={id}
+          className="char__item"
           role="presentation"
+          tabIndex={0}
+          onFocus={this.onCharFocus}
+          onKeyDown={this.keyDownCharItem}
           onClick={() => {
             this.props.onCharSelected(id)
           }}
@@ -55,7 +75,11 @@ class CharList extends Component {
         </li>
       )
     })
-    return <ul className="char__grid">{chars}</ul>
+    return (
+      <ul ref={this.charItemsRefs} className="char__grid">
+        {chars}
+      </ul>
+    )
   }
 
   render() {
