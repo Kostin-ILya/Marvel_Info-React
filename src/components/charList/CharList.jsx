@@ -8,28 +8,67 @@ import LoadError from '../loadingStatus/LoadError/LoadError'
 import './charList.scss'
 
 class CharList extends Component {
-  state = { charList: [], loading: true, error: false }
+  state = {
+    charList: [],
+    loading: true,
+    error: false,
+    newCharlistLoading: false,
+    charsEnded: false,
+    pageEnded: false,
+    offset: 210,
+  }
+
+  marvelService = new MarvelService()
 
   charItemsRefs = React.createRef()
 
   componentDidMount() {
-    this.updateCharList()
+    this.onUpdateCharList()
+
+    window.addEventListener('scroll', this.checkPageEnded)
+    window.addEventListener('scroll', this.onUpdateCharListByScroll)
   }
 
-  updateCharList = () => {
-    const marvelService = new MarvelService()
-    marvelService
-      .getAllCharacters()
-      .then((res) => {
-        this.onCharListLoaded(res)
-      })
-      .catch((err) => {
-        this.onLoadError(err)
-      })
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.checkPageEnded)
+    window.removeEventListener('scroll', this.onUpdateCharListByScroll)
   }
 
-  onCharListLoaded = (charList) => {
-    this.setState({ charList, loading: false })
+  checkPageEnded = () => {
+    if (
+      window.scrollY + document.documentElement.clientHeight >=
+      document.documentElement.offsetHeight - 3
+    ) {
+      this.setState({ pageEnded: true })
+    }
+  }
+
+  onUpdateCharListByScroll = () => {
+    const { pageEnded, charsEnded, newCharlistLoading } = this.state
+
+    if (pageEnded && !newCharlistLoading && !charsEnded) {
+      this.onUpdateCharList(this.state.offset)
+    }
+  }
+
+  onUpdateCharList = (offset) => {
+    this.setState({ newCharlistLoading: true })
+
+    this.marvelService
+      .getAllCharacters(offset)
+      .then(this.onCharListLoaded)
+      .catch(this.onLoadError)
+  }
+
+  onCharListLoaded = (newCharList) => {
+    this.setState((prevState) => ({
+      charList: [...prevState.charList, ...newCharList],
+      loading: false,
+      newCharlistLoading: false,
+      charsEnded: newCharList.length < 9,
+      pageEnded: false,
+      offset: prevState.offset + 9,
+    }))
   }
 
   onLoadError = (err) => {
@@ -45,7 +84,7 @@ class CharList extends Component {
     e.target.classList.add('char__item_selected')
   }
 
-  keyDownCharItem = (e) => {
+  onKeyDownCharItem = (e) => {
     if (e.code === 'Space' || e.code === 'Enter' || e.code === 'NumpadEnter') {
       e.preventDefault()
       e.target.click()
@@ -65,7 +104,7 @@ class CharList extends Component {
           role="presentation"
           tabIndex={0}
           onFocus={this.onCharFocus}
-          onKeyDown={this.keyDownCharItem}
+          onKeyDown={this.onKeyDownCharItem}
           onClick={() => {
             this.props.onCharSelected(id)
           }}
@@ -83,7 +122,8 @@ class CharList extends Component {
   }
 
   render() {
-    const { loading, error } = this.state
+    const { loading, error, newCharlistLoading, charsEnded, offset } =
+      this.state
 
     const elements = this.createCharListItems(this.state.charList)
     const spinner = loading ? <Spinner /> : null
@@ -95,7 +135,16 @@ class CharList extends Component {
         {spinner}
         {loadError}
         {content}
-        <button type="button" className="button button__main button__long">
+
+        <button
+          type="button"
+          className="button button__main button__long"
+          style={{ display: charsEnded ? 'none' : 'block' }}
+          disabled={newCharlistLoading}
+          onClick={() => {
+            this.onUpdateCharList(offset)
+          }}
+        >
           <div className="inner">load more</div>
         </button>
       </div>

@@ -20,6 +20,7 @@
     "arrow-body-style": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "jsx-a11y/no-noninteractive-tabindex": 0,
-    "import/no-unresolved": 0
+    "import/no-unresolved": 0,
+    "lines-between-class-members": 0
   }
 }
