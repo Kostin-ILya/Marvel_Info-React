@@ -3,7 +3,6 @@ import useHTTP from './useHTTP'
 const useMarvelService = () => {
   const _apiBase = 'https://gateway.marvel.com:443/v1/public/'
   const _apiKey = 'apikey=23c90e69b415b3efe1b9220eca93562b'
-  // const _baseOffset = '210'
 
   const { isLoading, isError, request } = useHTTP()
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 const useListLoad = (requestFn, requestItemsQuantity, initOffset = 210) => {
   const [list, setList] = useState([])
-  const [isNewListLoading, setIsNewCListLoading] = useState(false)
+  const [isNewListLoading, setIsNewListLoading] = useState(false)
   const [isItemsEnded, setItemsEnded] = useState(false)
   const [isPageEnded, setIsPageEnded] = useState(false)
   const [offset, setOffset] = useState(initOffset)
@@ -24,7 +24,7 @@ const useListLoad = (requestFn, requestItemsQuantity, initOffset = 210) => {
 
   const onUpdateList = (initLoad) => {
     if (!initLoad) {
-      setIsNewCListLoading(true)
+      setIsNewListLoading(true)
     }
 
     requestFn(offset).then(onListLoaded)
@@ -32,7 +32,7 @@ const useListLoad = (requestFn, requestItemsQuantity, initOffset = 210) => {
 
   const onListLoaded = (newList) => {
     setList((prevList) => [...prevList, ...newList])
-    setIsNewCListLoading(false)
+    setIsNewListLoading(false)
     setIsPageEnded(false)
     setItemsEnded(newList.length < requestItemsQuantity)
     setOffset((prevOffset) => prevOffset + requestItemsQuantity)

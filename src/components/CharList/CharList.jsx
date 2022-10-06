@@ -14,37 +14,29 @@ const CharList = (props) => {
 
   const { list, isNewListLoading, isItemsEnded, onUpdateList } = useListLoad(
     getAllCharacters,
-    9
+    9,
+    300
   )
 
   const { itemsParentRef, onItemFocus, onKeyDownOnItem } = useListEvent()
 
-  const createChars = (charListArr) => {
-    const chars = charListArr.map(({ id, name, thumbnail }) => {
-      const imgStyle = thumbnail.includes('image_not_available')
-        ? { objectFit: 'initial' }
-        : null
-
-      return (
-        <li
-          key={id}
-          className="char__item"
-          role="presentation"
-          tabIndex={0}
-          onFocus={onItemFocus}
-          onKeyDown={onKeyDownOnItem}
-          onClick={() => {
-            props.onCharSelected(id)
-          }}
-        >
-          <img src={thumbnail} alt={name} style={imgStyle} />
-          <div className="char__name">{name}</div>
-        </li>
-      )
-    })
-
-    return chars
-  }
+  const createChars = (charListArr) =>
+    charListArr.map(({ id, name, thumbnail, imgStyle }) => (
+      <li
+        key={id}
+        className="char__item"
+        role="presentation"
+        tabIndex={0}
+        onFocus={onItemFocus}
+        onKeyDown={onKeyDownOnItem}
+        onClick={() => {
+          props.onCharSelected(id)
+        }}
+      >
+        <img src={thumbnail} alt={name} style={imgStyle} />
+        <div className="char__name">{name}</div>
+      </li>
+    ))
 
   const spinner = isLoading && !isNewListLoading ? <Spinner /> : null
   const loadError = isError ? <Error /> : null
@@ -61,7 +53,9 @@ const CharList = (props) => {
         className="button button__main button__long"
         style={{ display: isItemsEnded ? 'none' : 'block' }}
         disabled={isNewListLoading}
-        onClick={onUpdateList}
+        onClick={() => {
+          onUpdateList()
+        }}
       >
         <div className="inner">load more</div>
       </button>

@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
-import AppHeader from '../AppHeader/AppHeader'
 import RandomChar from '../RandomChar/RandomChar'
 import CharList from '../CharList/CharList'
 import CharInfo from '../CharInfo/CharInfo'
 import ComicsList from '../ComicsList/ComicsList'
+import SingleComic from '../SingleComic/SingleComic'
+
+import AppHeader from '../AppHeader/AppHeader'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 import decoration from '../../resources/img/vision.png'
@@ -40,7 +42,7 @@ const App = () => {
       <AppHeader />
       <main>
         <ErrorBoundary>
-          <ComicsList />
+          <SingleComic comicId={105610} />
         </ErrorBoundary>
       </main>
     </div>

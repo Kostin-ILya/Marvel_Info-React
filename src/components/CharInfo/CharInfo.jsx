@@ -43,11 +43,7 @@ const CharInfo = (props) => {
 const View = ({ char }) => {
   const { name, description, thumbnail, comics, homepage, wiki } = char
 
-  const imgStyle = thumbnail.includes('image_not_available')
-    ? { objectFit: 'initial' }
-    : null
-
-  function createComics() {
+  const createComics = () => {
     if (comics.length > 10) {
       return [...comics].splice(0, 10).map((item) => (
         <li className="char__comics-item" key={item.name}>
