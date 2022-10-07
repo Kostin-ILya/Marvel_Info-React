@@ -41,7 +41,8 @@ const CharInfo = (props) => {
 }
 
 const View = ({ char }) => {
-  const { name, description, thumbnail, comics, homepage, wiki } = char
+  const { name, description, thumbnail, comics, homepage, wiki, imgStyle } =
+    char
 
   const createComics = () => {
     if (comics.length > 10) {
