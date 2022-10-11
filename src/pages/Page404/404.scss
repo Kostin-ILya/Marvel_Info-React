@@ -1,0 +1,36 @@
+@import '../../style/variables.scss';
+
+.page-404 {
+  margin-top: 150px;
+  text-align: center;
+  font-weight: bold;
+  .pulse404 {
+    animation: pulse404 linear 3s infinite;
+  }
+  @keyframes pulse404 {
+    50% {
+      transform: scale(0.8);
+    }
+    75% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  a {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 27px;
+    margin-top: 50px;
+    color: $main-color !important;
+    cursor: pointer;
+  }
+
+  p {
+    margin-top: 50px;
+    font-size: 24px;
+  }
+}
