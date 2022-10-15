@@ -1,25 +1,22 @@
 import { useState, useEffect } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 
 import useMarvelService from '../../hooks/useMarvelService'
 
-import Spinner from '../loadingStatus/Spinner/Spinner'
-import Error from '../loadingStatus/Error/Error'
+import Spinner from '../../components/loadingStatus/Spinner/Spinner'
+import Error from '../../components/loadingStatus/Error/Error'
 
 import './singleComic.scss'
 
-const SingleComic = ({ comicId }) => {
+const SingleComicPage = () => {
   const [comic, setComic] = useState(null)
   const { isLoading, isError, getComic } = useMarvelService()
 
-  useEffect(() => {
-    updateComic()
-  }, [comicId])
+  const { id } = useParams()
 
-  const updateComic = () => {
-    if (comicId) {
-      getComic(comicId).then(setComic)
-    }
-  }
+  useEffect(() => {
+    getComic(id).then(setComic)
+  }, [id])
 
   const spinner = isLoading ? <Spinner /> : null
   const loadError = isError ? <Error /> : null
@@ -39,6 +36,8 @@ const SingleComic = ({ comicId }) => {
 const View = ({
   comic: { title, description, thumbnail, pageCount, language, price },
 }) => {
+  const navigate = useNavigate()
+
   return (
     <div className="single-comic">
       <img src={thumbnail} alt={title} className="single-comic__img" />
@@ -49,11 +48,19 @@ const View = ({
         <p className="single-comic__descr">Language: {language}</p>
         <div className="single-comic__price">{price}$</div>
       </div>
-      <a href="#" className="single-comic__back">
+      <Link to="/" className="single-comic__back">
         Back to all
+      </Link>
+      <a
+        onClick={(e) => {
+          e.preventDefault()
+          navigate(-1)
+        }}
+      >
+        Back to previous page
       </a>
     </div>
   )
 }
 
-export default SingleComic
+export default SingleComicPage
