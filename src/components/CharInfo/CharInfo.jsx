@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
 
@@ -46,18 +47,30 @@ const View = ({ char }) => {
 
   const createComics = () => {
     if (comics.length > 10) {
-      return [...comics].splice(0, 10).map((item) => (
-        <li className="char__comics-item" key={item.name}>
-          {item.name}
-        </li>
-      ))
+      return [...comics].splice(0, 10).map((item) => {
+        const comicId = item.resourceURI.replace(/\D/g, '').slice(1)
+
+        return (
+          <Link
+            to={`comics/${comicId}`}
+            className="char__comics-item"
+            key={item.name}
+          >
+            {item.name}
+          </Link>
+        )
+      })
     }
 
-    return comics.map((item) => (
-      <li className="char__comics-item" key={item.name}>
-        {item.name}
-      </li>
-    ))
+    return comics.map((item) => {
+      const comicId = item.resourceURI.replace(/\D/g, '').slice(1)
+
+      return (
+        <Link to={`comics/${comicId}`} className="char__comics-item" key={name}>
+          {item.name}
+        </Link>
+      )
+    })
   }
 
   return (
@@ -67,10 +80,20 @@ const View = ({ char }) => {
         <div>
           <div className="char__info-name">{name}</div>
           <div className="char__btns">
-            <a href={homepage} tabIndex={0} className="button button__main">
+            <a
+              href={homepage}
+              target="_blank"
+              tabIndex={0}
+              className="button button__main"
+            >
               <div className="inner">homepage</div>
             </a>
-            <a href={wiki} tabIndex={0} className="button button__secondary">
+            <a
+              href={wiki}
+              target="_blank"
+              tabIndex={0}
+              className="button button__secondary"
+            >
               <div className="inner">Wiki</div>
             </a>
           </div>
@@ -79,7 +102,7 @@ const View = ({ char }) => {
       <div className="char__descr">{description}</div>
       <div className="char__comics">Comics:</div>
       <ul className="char__comics-list">
-        {comics.length !== 0
+        {comics.length
           ? createComics()
           : 'There is no comics for this character'}
       </ul>

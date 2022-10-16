@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import useMarvelService from '../../hooks/useMarvelService'
 import useListLoad from '../../hooks/useListLoad'
 import useListEvent from '../../hooks/useListEvent'
@@ -17,20 +19,20 @@ const ComicsList = () => {
   const { itemsParentRef, onItemFocus, onKeyDownOnItem } = useListEvent()
 
   const createComics = (itemsList) => {
-    return itemsList.map(({ id, title, thumbnail, price }) => (
+    return itemsList.map(({ id, title, thumbnail, price }, index) => (
       <li
-        key={id}
+        key={index}
         className="comics__item"
         role="presentation"
         tabIndex={0}
         onFocus={onItemFocus}
         onKeyDown={onKeyDownOnItem}
       >
-        <a tabIndex={-1} href="#">
+        <Link to={`/comics/${id}`} tabIndex={-1}>
           <img src={thumbnail} alt="comic" className="comics__item-img" />
           <div className="comics__item-name">{title}</div>
           <div className="comics__item-price">{price}$</div>
-        </a>
+        </Link>
       </li>
     ))
   }

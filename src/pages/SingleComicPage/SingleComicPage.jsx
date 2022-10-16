@@ -44,21 +44,16 @@ const View = ({
       <div className="single-comic__info">
         <h2 className="single-comic__name">{title}</h2>
         <p className="single-comic__descr">{description}</p>
-        <p className="single-comic__descr">{pageCount} pages</p>
-        <p className="single-comic__descr">Language: {language}</p>
-        <div className="single-comic__price">{price}$</div>
+        <p className="single-comic__descr-info">{pageCount}</p>
+        <p className="single-comic__descr-info">Language: {language}</p>
+        <div className="single-comic__price">{price}</div>
       </div>
-      <Link to="/" className="single-comic__back">
-        Back to all
-      </Link>
-      <a
-        onClick={(e) => {
-          e.preventDefault()
-          navigate(-1)
-        }}
-      >
-        Back to previous page
-      </a>
+      <div className="link-wrapper">
+        <Link to="/" className="single-comic__back">
+          Back to all
+        </Link>
+        <a onClick={() => navigate(-1)}> Back to previous page</a>
+      </div>
     </div>
   )
 }

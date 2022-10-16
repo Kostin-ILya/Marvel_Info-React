@@ -29,7 +29,9 @@ const useMarvelService = () => {
     pageCount: comics.pageCount
       ? `${comics.pageCount} pages`
       : 'No information about the number of pages',
-    price: comics.prices[0].price,
+    price: comics.prices[0].price
+      ? `${comics.prices[0].price}$`
+      : 'The price is unknown',
     thumbnail: `${comics.thumbnail.path}.${comics.thumbnail.extension}`,
     language: comics.textObjects.language || 'en-us',
   })
