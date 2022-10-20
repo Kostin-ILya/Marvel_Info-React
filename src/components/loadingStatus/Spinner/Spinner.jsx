@@ -1,11 +1,11 @@
-const Spinner = () => (
+const Spinner = ({ center }) => (
   <svg
     version="1.0"
     width="200px"
     height="200px"
     display="block"
     viewBox="0 0 128 128"
-    style={{ margin: '0 auto' }}
+    style={{ margin: center ? '50vh auto' : '0 auto' }}
   >
     <rect x="0" y="0" width="100%" height="100%" fill="#FFFFFF" />
     <g>

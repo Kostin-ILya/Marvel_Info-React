@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import Error from '../../components/loadingStatus/Error/Error'
 
-import './404.scss'
+import './Page404.scss'
 
 const Page404 = () => {
   const navigate = useNavigate()
