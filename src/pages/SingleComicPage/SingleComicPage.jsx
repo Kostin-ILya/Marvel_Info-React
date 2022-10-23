@@ -49,8 +49,8 @@ const View = ({
         <div className="single-comic__price">{price}</div>
       </div>
       <div className="link-wrapper">
-        <Link to="/" className="single-comic__back">
-          Back to all
+        <Link to="/comics" className="single-comic__back">
+          Back to all comics
         </Link>
         <a onClick={() => navigate(-1)}> Back to previous page</a>
       </div>
