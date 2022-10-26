@@ -11,6 +11,15 @@
   &__item {
     transition: 0.3s transform;
     outline: none;
+    &-enter {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    &-enter-active {
+      opacity: 1;
+      transform: scale(1);
+      transition: all 700ms ease-in;
+    }
 
     &-img {
       box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);

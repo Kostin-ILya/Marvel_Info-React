@@ -1,3 +1,5 @@
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+
 import useMarvelService from '../../hooks/useMarvelService'
 import useListLoad from '../../hooks/useListLoad'
 import useListEvent from '../../hooks/useListEvent'
@@ -21,21 +23,22 @@ const CharList = (props) => {
   const { itemsParentRef, onItemFocus, onKeyDownOnItem } = useListEvent()
 
   const createChars = (charListArr) =>
-    charListArr.map(({ id, name, thumbnail, imgStyle }) => (
-      <li
-        key={id}
-        className="char__item"
-        role="presentation"
-        tabIndex={0}
-        onFocus={onItemFocus}
-        onKeyDown={onKeyDownOnItem}
-        onClick={() => {
-          props.onCharSelected(id)
-        }}
-      >
-        <img src={thumbnail} alt={name} style={imgStyle} />
-        <div className="char__name">{name}</div>
-      </li>
+    charListArr.map(({ id, name, thumbnail, imgStyle }, index) => (
+      <CSSTransition key={index} timeout={700} classNames="char__item">
+        <div
+          className="char__item"
+          role="presentation"
+          tabIndex={0}
+          onFocus={onItemFocus}
+          onKeyDown={onKeyDownOnItem}
+          onClick={() => {
+            props.onCharSelected(id)
+          }}
+        >
+          <img src={thumbnail} alt={name} style={imgStyle} />
+          <div className="char__name">{name}</div>
+        </div>
+      </CSSTransition>
     ))
 
   const spinner = isLoading && !isNewListLoading ? <Spinner /> : null
@@ -45,9 +48,14 @@ const CharList = (props) => {
     <div className="char__list">
       {spinner}
       {loadError}
-      <ul ref={itemsParentRef} className="char__grid">
-        {createChars(list)}
-      </ul>
+      <div ref={itemsParentRef}>
+        <TransitionGroup className="char__grid">
+          {createChars(list)}
+        </TransitionGroup>
+      </div>
+
+      {/* <ul ref={itemsParentRef} className="char__grid">
+      </ul> */}
       <button
         type="button"
         className="button button__main button__long"

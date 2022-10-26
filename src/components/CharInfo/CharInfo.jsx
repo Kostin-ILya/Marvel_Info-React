@@ -66,7 +66,11 @@ const View = ({ char }) => {
       const comicId = item.resourceURI.replace(/\D/g, '').slice(1)
 
       return (
-        <Link to={`comics/${comicId}`} className="char__comics-item" key={name}>
+        <Link
+          to={`comics/${comicId}`}
+          className="char__comics-item"
+          key={item.name}
+        >
           {item.name}
         </Link>
       )
