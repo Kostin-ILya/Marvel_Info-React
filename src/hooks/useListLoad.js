@@ -23,7 +23,7 @@ const useListLoad = (requestFn, requestItemsQuantity, initOffset = 210) => {
   }, [isPageEnded])
 
   const onUpdateList = (initLoad) => {
-    if (!initLoad) {
+    if (!initLoad || typeof initLoad === 'object') {
       setIsNewListLoading(true)
     }
 

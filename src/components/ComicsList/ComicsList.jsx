@@ -22,7 +22,7 @@ const ComicsList = () => {
   const createComics = (itemsList) => {
     return itemsList.map(({ id, title, thumbnail, price }, index) => (
       <CSSTransition key={index} timeout={700} classNames="comics__item">
-        <div
+        <li
           className="comics__item"
           role="presentation"
           tabIndex={0}
@@ -34,7 +34,7 @@ const ComicsList = () => {
             <div className="comics__item-name">{title}</div>
             <div className="comics__item-price">{price}$</div>
           </Link>
-        </div>
+        </li>
       </CSSTransition>
     ))
   }
@@ -46,21 +46,16 @@ const ComicsList = () => {
     <div className="comics__list">
       {spinner}
       {loadError}
-      {/* <ul ref={itemsParentRef} className="comics__grid">
-        {createComics(list)}
-      </ul> */}
-      <div ref={itemsParentRef}>
-        <TransitionGroup className="comics__grid">
-          {createComics(list)}
-        </TransitionGroup>
-      </div>
+      <ul ref={itemsParentRef} className="comics__grid">
+        <TransitionGroup component={null}>{createComics(list)}</TransitionGroup>
+      </ul>
       <button
         type="button"
         className="button button__main button__long"
         style={{ display: isItemsEnded ? 'none' : 'block' }}
         disabled={isNewListLoading}
-        onClick={() => onUpdateList()}
-        // onClick={onUpdateList} если оставить так, то в обработчик 1ым аргументом будет приходить объект события и будут баги
+        onClick={onUpdateList}
+        // onClick={() => onUpdateList()}
       >
         <div className="inner">load more</div>
       </button>

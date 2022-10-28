@@ -25,7 +25,7 @@ const CharList = (props) => {
   const createChars = (charListArr) =>
     charListArr.map(({ id, name, thumbnail, imgStyle }, index) => (
       <CSSTransition key={index} timeout={700} classNames="char__item">
-        <div
+        <li
           className="char__item"
           role="presentation"
           tabIndex={0}
@@ -37,7 +37,7 @@ const CharList = (props) => {
         >
           <img src={thumbnail} alt={name} style={imgStyle} />
           <div className="char__name">{name}</div>
-        </div>
+        </li>
       </CSSTransition>
     ))
 
@@ -48,22 +48,15 @@ const CharList = (props) => {
     <div className="char__list">
       {spinner}
       {loadError}
-      <div ref={itemsParentRef}>
-        <TransitionGroup className="char__grid">
-          {createChars(list)}
-        </TransitionGroup>
-      </div>
-
-      {/* <ul ref={itemsParentRef} className="char__grid">
-      </ul> */}
+      <ul ref={itemsParentRef} className="char__grid">
+        <TransitionGroup component={null}>{createChars(list)}</TransitionGroup>
+      </ul>
       <button
         type="button"
         className="button button__main button__long"
         style={{ display: isItemsEnded ? 'none' : 'block' }}
         disabled={isNewListLoading}
-        onClick={() => {
-          onUpdateList()
-        }}
+        onClick={onUpdateList}
       >
         <div className="inner">load more</div>
       </button>

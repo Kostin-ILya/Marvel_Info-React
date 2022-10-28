@@ -19,9 +19,9 @@ const useHTTP = () => {
       if (error.response) {
         console.log('Status:', error.response.status, error.response.data)
       } else if (error.request) {
-        console.log(error.request)
+        console.log('Error!', error.request)
       } else {
-        console.log('Error', error.message)
+        console.log('Error!', error.message)
       }
     } finally {
       setIsLoading(false)
