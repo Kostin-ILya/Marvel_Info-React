@@ -12,6 +12,8 @@ const SingleComicPage = lazy(() =>
   import('../../pages/SingleComicPage/SingleComicPage')
 )
 
+import Basic from '../../formik'
+
 const App = () => {
   return (
     <Suspense fallback={<Spinner center />}>
@@ -28,5 +30,9 @@ const App = () => {
     </Suspense>
   )
 }
+
+// const App = () => {
+//   return <Basic />
+// }
 
 export default App

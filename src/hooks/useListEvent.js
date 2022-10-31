@@ -4,7 +4,8 @@ const useListEvent = () => {
   const itemsParentRef = useRef(null)
 
   const onItemFocus = (e) => {
-    const items = [...itemsParentRef.current.firstElementChild.children]
+    const items = [...itemsParentRef.current.children]
+
     items.forEach((item) => {
       item.classList.remove('item_selected')
     })
