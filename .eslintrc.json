@@ -27,6 +27,8 @@
     "consistent-return": 0,
     "import/order": 0,
     "react/no-array-index-key": 0,
-    "react/jsx-no-target-blank": 0
+    "react/jsx-no-target-blank": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "no-nested-ternary": 0
   }
 }

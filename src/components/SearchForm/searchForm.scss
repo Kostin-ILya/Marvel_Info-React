@@ -17,7 +17,7 @@
       align-items: center;
       margin-top: 20px;
     }
-    p {
+    label {
       font-weight: 700;
       font-size: 18px;
       line-height: 21px;
@@ -27,9 +27,14 @@
       padding: 10px;
       font-size: 14px;
     }
+    &_name {
+      color: $main-color;
+      text-decoration: underline;
+    }
   }
   &__msg {
     &_error {
+      margin-top: 15px;
       color: $main-color;
       font-weight: 700;
       font-size: 18px;

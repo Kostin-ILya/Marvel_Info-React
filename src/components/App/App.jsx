@@ -11,8 +11,11 @@ const Page404 = lazy(() => import('../../pages/Page404/Page404'))
 const SingleComicPage = lazy(() =>
   import('../../pages/SingleComicPage/SingleComicPage')
 )
+const SingleCharPage = lazy(() =>
+  import('../../pages/SingleCharPage/SingleCharPage')
+)
 
-import Basic from '../../formik'
+// import Basic from '../../formik'
 
 const App = () => {
   return (
@@ -20,9 +23,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
+          <Route path="character/:charId" element={<SingleCharPage />} />
           <Route path="/comics" element={<ComicsPage />}>
             <Route index element={<ComicsList />} />
-            <Route path=":id" element={<SingleComicPage />} />
+            <Route path=":comicId" element={<SingleComicPage />} />
           </Route>
           <Route path="*" element={<Page404 />} />
         </Route>
