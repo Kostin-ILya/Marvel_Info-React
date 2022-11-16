@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import useMarvelService from '../../hooks/useMarvelService'
+import useSinglePage from '../../hooks/useSinglePage'
 
 import Spinner from '../../components/loadingStatus/Spinner/Spinner'
 import Error from '../../components/loadingStatus/Error/Error'
@@ -9,19 +9,13 @@ import Error from '../../components/loadingStatus/Error/Error'
 import './singleComic.scss'
 
 const SingleComicPage = () => {
-  const [comic, setComic] = useState(null)
   const { isLoading, isError, getComic } = useMarvelService()
-
-  const { id } = useParams()
-
-  useEffect(() => {
-    getComic(id).then(setComic)
-  }, [id])
+  const { data, navigate } = useSinglePage(getComic)
 
   const spinner = isLoading ? <Spinner /> : null
   const loadError = isError ? <Error /> : null
-  const content = !(isLoading || isError || !comic) ? (
-    <View comic={comic} />
+  const content = !(isLoading || isError || !data) ? (
+    <View comic={data} navigate={navigate} />
   ) : null
 
   return (
@@ -35,9 +29,8 @@ const SingleComicPage = () => {
 
 const View = ({
   comic: { title, description, thumbnail, pageCount, language, price },
+  navigate,
 }) => {
-  const navigate = useNavigate()
-
   return (
     <div className="single-comic">
       <img src={thumbnail} alt={title} className="single-comic__img" />

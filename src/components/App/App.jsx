@@ -15,18 +15,16 @@ const SingleCharPage = lazy(() =>
   import('../../pages/SingleCharPage/SingleCharPage')
 )
 
-// import Basic from '../../formik'
-
 const App = () => {
   return (
     <Suspense fallback={<Spinner center />}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="character/:charId" element={<SingleCharPage />} />
+          <Route path="character/:id" element={<SingleCharPage />} />
           <Route path="/comics" element={<ComicsPage />}>
             <Route index element={<ComicsList />} />
-            <Route path=":comicId" element={<SingleComicPage />} />
+            <Route path=":id" element={<SingleComicPage />} />
           </Route>
           <Route path="*" element={<Page404 />} />
         </Route>
@@ -34,9 +32,5 @@ const App = () => {
     </Suspense>
   )
 }
-
-// const App = () => {
-//   return <Basic />
-// }
 
 export default App
