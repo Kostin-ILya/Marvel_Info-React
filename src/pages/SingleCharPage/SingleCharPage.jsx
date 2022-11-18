@@ -1,6 +1,9 @@
+import { Helmet } from 'react-helmet'
+
 import useMarvelService from '../../hooks/useMarvelService'
 import useSinglePage from '../../hooks/useSinglePage'
 
+// import ComicsList from '../../components/ComicsList/ComicsList'
 import AppBanner from '../../components/AppBanner/AppBanner'
 import Spinner from '../../components/loadingStatus/Spinner/Spinner'
 import Error from '../../components/loadingStatus/Error/Error'
@@ -29,6 +32,11 @@ const SingleCharPage = () => {
 const View = ({ char: { name, description, thumbnail }, navigate }) => {
   return (
     <>
+      <Helmet>
+        <meta name="description" content={`Marvel character: ${name}`} />
+        <title>{name}</title>
+      </Helmet>
+
       <AppBanner />
 
       <div className="single-char">
@@ -43,6 +51,10 @@ const View = ({ char: { name, description, thumbnail }, navigate }) => {
           Back to previous page
         </a>
       </div>
+
+      {/* <div className="single-char__comics">
+        <ComicsList />
+      </div> */}
     </>
   )
 }
