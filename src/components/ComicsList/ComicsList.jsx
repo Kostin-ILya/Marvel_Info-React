@@ -39,23 +39,22 @@ const ComicsList = () => {
     ))
   }
 
-  const spinner = isLoading && !isNewListLoading ? <Spinner /> : null
-  const loadError = isError ? <Error /> : null
-
   return (
     <div className="comics__list">
-      {spinner}
-      {loadError}
+      {isLoading && !isNewListLoading ? <Spinner /> : null}
+
+      {isError && <Error />}
+
       <ul ref={itemsParentRef} className="comics__grid">
         <TransitionGroup component={null}>{createComics(list)}</TransitionGroup>
       </ul>
+
       <button
         type="button"
         className="button button__main button__long"
         style={{ display: isItemsEnded ? 'none' : 'block' }}
         disabled={isNewListLoading}
         onClick={onUpdateList}
-        // onClick={() => onUpdateList()}
       >
         <div className="inner">load more</div>
       </button>

@@ -4,7 +4,7 @@ const useMarvelService = () => {
   const _apiBase = 'https://gateway.marvel.com:443/v1/public/'
   const _apiKey = 'apikey=23c90e69b415b3efe1b9220eca93562b'
 
-  const { isLoading, isError, request } = useHTTP()
+  const { process, setProcess, isLoading, isError, request } = useHTTP()
 
   const _transformChar = (char) => ({
     id: char.id,
@@ -68,6 +68,8 @@ const useMarvelService = () => {
   }
 
   return {
+    process,
+    setProcess,
     isLoading,
     isError,
     getCharacter,

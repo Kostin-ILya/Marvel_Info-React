@@ -4,47 +4,33 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import useMarvelService from '../../hooks/useMarvelService'
-
-import Spinner from '../loadingStatus/Spinner/Spinner'
-import Error from '../loadingStatus/Error/Error'
-import Skeleton from '../Skeleton/Skeleton'
+import setContent from '../../utils/setContent'
 
 import './charInfo.scss'
 
-const CharInfo = (props) => {
+const CharInfo = ({ charId }) => {
   const [char, setChar] = useState(null)
 
-  const { isLoading, isError, getCharacter } = useMarvelService()
+  const { process, setProcess, getCharacter } = useMarvelService()
 
   useEffect(() => {
     updateChar()
-  }, [props.charId])
+  }, [charId])
 
   const updateChar = () => {
-    if (props.charId) {
-      getCharacter(props.charId).then(setChar)
+    if (charId) {
+      getCharacter(charId)
+        .then(setChar)
+        .then(() => setProcess('success'))
     }
   }
 
-  const skeleton = char || isLoading || isError ? null : <Skeleton />
-  const spinner = isLoading ? <Spinner /> : null
-  const loadError = isError ? <Error /> : null
-  const content = isLoading || isError || skeleton ? null : <View char={char} />
-
-  return (
-    <div className="char__info">
-      {skeleton}
-      {spinner}
-      {loadError}
-      {content}
-    </div>
-  )
+  return <div className="char__info">{setContent(process, View, { char })}</div>
 }
 
-const View = ({ char }) => {
-  const { name, description, thumbnail, comics, homepage, wiki, imgStyle } =
-    char
-
+const View = ({
+  char: { name, description, thumbnail, comics, homepage, wiki, imgStyle },
+}) => {
   const createComics = () => {
     if (comics.length > 10) {
       return [...comics].splice(0, 10).map((item) => {

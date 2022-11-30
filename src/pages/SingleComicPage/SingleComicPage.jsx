@@ -2,35 +2,21 @@ import { Link } from 'react-router-dom'
 
 import useMarvelService from '../../hooks/useMarvelService'
 import useSinglePage from '../../hooks/useSinglePage'
+import setContent from '../../utils/setContent'
 
 import { Helmet } from 'react-helmet'
-
-import Spinner from '../../components/loadingStatus/Spinner/Spinner'
-import Error from '../../components/loadingStatus/Error/Error'
 
 import './singleComic.scss'
 
 const SingleComicPage = () => {
-  const { isLoading, isError, getComic } = useMarvelService()
-  const { data, navigate } = useSinglePage(getComic)
+  const { process, setProcess, getComic } = useMarvelService()
+  const { data, navigate } = useSinglePage(getComic, setProcess)
 
-  const spinner = isLoading ? <Spinner /> : null
-  const loadError = isError ? <Error /> : null
-  const content = !(isLoading || isError || !data) ? (
-    <View comic={data} navigate={navigate} />
-  ) : null
-
-  return (
-    <>
-      {loadError}
-      {spinner}
-      {content}
-    </>
-  )
+  return <>{setContent(process, View, { data, navigate })}</>
 }
 
 const View = ({
-  comic: { title, description, thumbnail, pageCount, language, price },
+  data: { title, description, thumbnail, pageCount, language, price },
   navigate,
 }) => {
   return (

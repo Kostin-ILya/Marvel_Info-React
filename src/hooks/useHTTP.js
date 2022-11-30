@@ -4,9 +4,12 @@ import axios from 'axios'
 const useHTTP = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
+  const [process, setProcess] = useState('waiting')
 
   const request = async (url) => {
     setIsLoading(true)
+    setProcess('loading')
+
     setIsError(false)
 
     try {
@@ -15,6 +18,8 @@ const useHTTP = () => {
       return response.data
     } catch (error) {
       setIsError(true)
+
+      setProcess('error')
 
       if (error.response) {
         console.log('Status:', error.response.status, error.response.data)
@@ -28,7 +33,7 @@ const useHTTP = () => {
     }
   }
 
-  return { isLoading, isError, request }
+  return { process, setProcess, isLoading, isError, request }
 }
 
 export default useHTTP

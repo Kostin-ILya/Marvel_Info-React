@@ -2,34 +2,21 @@ import { Helmet } from 'react-helmet'
 
 import useMarvelService from '../../hooks/useMarvelService'
 import useSinglePage from '../../hooks/useSinglePage'
+import setContent from '../../utils/setContent'
 
 // import ComicsList from '../../components/ComicsList/ComicsList'
 import AppBanner from '../../components/AppBanner/AppBanner'
-import Spinner from '../../components/loadingStatus/Spinner/Spinner'
-import Error from '../../components/loadingStatus/Error/Error'
 
 import './singleCharPage.scss'
 
 const SingleCharPage = () => {
-  const { isLoading, isError, getCharacter } = useMarvelService()
-  const { data, navigate } = useSinglePage(getCharacter)
+  const { process, setProcess, getCharacter } = useMarvelService()
+  const { data, navigate } = useSinglePage(getCharacter, setProcess)
 
-  const spinner = isLoading ? <Spinner /> : null
-  const loadError = isError ? <Error /> : null
-  const content = !(isLoading || isError || !data) ? (
-    <View char={data} navigate={navigate} />
-  ) : null
-
-  return (
-    <>
-      {loadError}
-      {spinner}
-      {content}
-    </>
-  )
+  return <>{setContent(process, View, { data, navigate })}</>
 }
 
-const View = ({ char: { name, description, thumbnail }, navigate }) => {
+const View = ({ data: { name, description, thumbnail }, navigate }) => {
   return (
     <>
       <Helmet>
