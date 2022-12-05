@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import useMarvelService from '../../hooks/useMarvelService'
-import setContent from '../../utils/setContent'
+import { setContent } from '../../utils/setContent'
 
 import './charInfo.scss'
 
@@ -29,7 +29,7 @@ const CharInfo = ({ charId }) => {
 }
 
 const View = ({
-  char: { name, description, thumbnail, comics, homepage, wiki, imgStyle },
+  char: { id, name, description, thumbnail, comics, wiki, imgStyle },
 }) => {
   const createComics = () => {
     if (comics.length > 10) {
@@ -70,14 +70,13 @@ const View = ({
         <div>
           <div className="char__info-name">{name}</div>
           <div className="char__btns">
-            <a
-              href={homepage}
-              target="_blank"
+            <Link
+              to={`/character/${id}`}
               tabIndex={0}
               className="button button__main"
             >
               <div className="inner">homepage</div>
-            </a>
+            </Link>
             <a
               href={wiki}
               target="_blank"

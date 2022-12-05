@@ -41,16 +41,16 @@ const CharList = (props) => {
       </CSSTransition>
     ))
 
-  const spinner = isLoading && !isNewListLoading ? <Spinner /> : null
-  const loadError = isError ? <Error /> : null
-
   return (
     <div className="char__list">
-      {spinner}
-      {loadError}
+      {isLoading && !isNewListLoading && <Spinner />}
+
+      {isError && <Error />}
+
       <ul ref={itemsParentRef} className="char__grid">
         <TransitionGroup component={null}>{createChars(list)}</TransitionGroup>
       </ul>
+
       <button
         type="button"
         className="button button__main button__long"
