@@ -1,24 +1,22 @@
 import { Link } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import useMarvelService from '../../hooks/useMarvelService'
-import useListLoad from '../../hooks/useListLoad'
-import useListEvent from '../../hooks/useListEvent'
-
 import Spinner from '../loadingStatus/Spinner/Spinner'
 import Error from '../loadingStatus/Error/Error'
 
 import './comicsList.scss'
 
-const ComicsList = () => {
-  const { isLoading, isError, getAllComics } = useMarvelService()
-  const { list, isNewListLoading, isItemsEnded, onUpdateList } = useListLoad(
-    getAllComics,
-    8,
-    250
-  )
-  const { itemsParentRef, onItemFocus, onKeyDownOnItem } = useListEvent()
-
+const ComicsList = ({
+  isLoading,
+  isError,
+  list,
+  isNewListLoading,
+  isItemsEnded,
+  onUpdateList,
+  itemsParentRef,
+  onItemFocus,
+  onKeyDownOnItem,
+}) => {
   const createComics = (itemsList) => {
     return itemsList.map(({ id, title, thumbnail, price }, index) => (
       <CSSTransition key={index} timeout={700} classNames="comics__item">
@@ -41,7 +39,7 @@ const ComicsList = () => {
 
   return (
     <div className="comics__list">
-      {isLoading && !isNewListLoading ? <Spinner /> : null}
+      {isLoading && !isNewListLoading && <Spinner />}
 
       {isError && <Error />}
 
@@ -52,7 +50,7 @@ const ComicsList = () => {
       <button
         type="button"
         className="button button__main button__long"
-        style={{ display: isItemsEnded ? 'none' : 'block' }}
+        style={{ display: isItemsEnded && 'none' }}
         disabled={isNewListLoading}
         onClick={onUpdateList}
       >

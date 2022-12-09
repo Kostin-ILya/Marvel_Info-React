@@ -17,4 +17,20 @@ const setContent = (process, Component, props) => {
   }
 }
 
-export default setContent
+const setContentWithList = (process, Component, props) => {
+  switch (process) {
+    case 'waiting':
+      return <Spinner />
+    case 'loading':
+      return <Component {...props} />
+    case 'error':
+      console.log('err')
+      return <Error />
+    case 'success':
+      return <Component {...props} />
+    default:
+      throw new Error('Error when creating content')
+  }
+}
+
+export { setContent, setContentWithList }

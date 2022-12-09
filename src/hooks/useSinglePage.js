@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 const useSinglePage = (requestFn, setProcess) => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState({})
 
   const navigate = useNavigate()
 
@@ -14,7 +14,7 @@ const useSinglePage = (requestFn, setProcess) => {
       .then(() => setProcess('success'))
   }, [id])
 
-  return { data, navigate }
+  return { id, data, navigate }
 }
 
 export default useSinglePage

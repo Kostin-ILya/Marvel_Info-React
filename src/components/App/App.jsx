@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import Layout from '../../pages/Layout'
-import ComicsList from '../ComicsList/ComicsList'
+import ComicsListFull from '../ComicsListFull/ComicsListFull'
 import Spinner from '../loadingStatus/Spinner/Spinner'
 
 const MainPage = lazy(() => import('../../pages/MainPage'))
@@ -23,7 +23,7 @@ const App = () => {
           <Route index element={<MainPage />} />
           <Route path="character/:id" element={<SingleCharPage />} />
           <Route path="/comics" element={<ComicsPage />}>
-            <Route index element={<ComicsList />} />
+            <Route index element={<ComicsListFull />} />
             <Route path=":id" element={<SingleComicPage />} />
           </Route>
           <Route path="*" element={<Page404 />} />

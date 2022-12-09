@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import useMarvelService from '../../hooks/useMarvelService'
 import useSinglePage from '../../hooks/useSinglePage'
-import setContent from '../../utils/setContent'
+import { setContent } from '../../utils/setContent'
 
 import { Helmet } from 'react-helmet'
 

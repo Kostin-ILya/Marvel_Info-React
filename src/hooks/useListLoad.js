@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const useListLoad = (requestFn, requestItemsQuantity, initOffset = 210) => {
+const useListLoad = (requestFn, requestItemsQuantity, initOffset, idChar) => {
   const [list, setList] = useState([])
   const [isNewListLoading, setIsNewListLoading] = useState(false)
   const [isItemsEnded, setItemsEnded] = useState(false)
@@ -27,7 +27,11 @@ const useListLoad = (requestFn, requestItemsQuantity, initOffset = 210) => {
       setIsNewListLoading(true)
     }
 
-    requestFn(offset).then(onListLoaded)
+    if (requestFn.name === 'getAllComicsByName') {
+      requestFn(idChar, offset).then(onListLoaded)
+    } else {
+      requestFn(offset).then(onListLoaded)
+    }
   }
 
   const onListLoaded = (newList) => {
@@ -52,7 +56,6 @@ const useListLoad = (requestFn, requestItemsQuantity, initOffset = 210) => {
     isNewListLoading,
     isItemsEnded,
     onUpdateList,
-    offset,
   }
 }
 

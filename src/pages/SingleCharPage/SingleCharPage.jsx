@@ -2,21 +2,54 @@ import { Helmet } from 'react-helmet'
 
 import useMarvelService from '../../hooks/useMarvelService'
 import useSinglePage from '../../hooks/useSinglePage'
-import setContent from '../../utils/setContent'
+import useListLoad from '../../hooks/useListLoad'
+import useListEvent from '../../hooks/useListEvent'
+import { setContentWithList } from '../../utils/setContent'
 
-// import ComicsList from '../../components/ComicsList/ComicsList'
+import ComicsList from '../../components/ComicsList/ComicsList'
 import AppBanner from '../../components/AppBanner/AppBanner'
 
 import './singleCharPage.scss'
 
 const SingleCharPage = () => {
-  const { process, setProcess, getCharacter } = useMarvelService()
-  const { data, navigate } = useSinglePage(getCharacter, setProcess)
+  const {
+    isLoading,
+    isError,
+    process,
+    setProcess,
+    getCharacter,
+    getAllComicsByName,
+  } = useMarvelService()
+  const { data, id, navigate } = useSinglePage(getCharacter, setProcess)
 
-  return <>{setContent(process, View, { data, navigate })}</>
+  const { list, isNewListLoading, isItemsEnded, onUpdateList } = useListLoad(
+    getAllComicsByName,
+    8,
+    0,
+    id
+  )
+  const { itemsParentRef, onItemFocus, onKeyDownOnItem } = useListEvent()
+
+  const comics = {
+    list,
+    itemsParentRef,
+    onItemFocus,
+    onKeyDownOnItem,
+    onUpdateList,
+    isNewListLoading,
+    isLoading,
+    isError,
+    isItemsEnded,
+  }
+
+  return (
+    <>
+      {setContentWithList(process, View, { data, navigate, comics, process })}
+    </>
+  )
 }
 
-const View = ({ data: { name, description, thumbnail }, navigate }) => {
+const View = ({ data: { name, description, thumbnail }, navigate, comics }) => {
   return (
     <>
       <Helmet>
@@ -39,9 +72,14 @@ const View = ({ data: { name, description, thumbnail }, navigate }) => {
         </a>
       </div>
 
-      {/* <div className="single-char__comics">
-        <ComicsList />
-      </div> */}
+      <div className="single-char__comics">
+        {comics.list.length > 0 && (
+          <h2>
+            {'Comics with '} <span>{name}</span>
+          </h2>
+        )}
+        <ComicsList {...comics} />
+      </div>
     </>
   )
 }
