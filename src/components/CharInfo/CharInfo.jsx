@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import useMarvelService from '../../hooks/useMarvelService'
-import { setContent } from '../../utils/setContent'
+import setContent from '../../utils/setContent'
 
 import './charInfo.scss'
 

@@ -63,3 +63,20 @@
     right: -37px;
   }
 }
+
+@media (max-width: 1199px) {
+  .randomchar {
+    &__block {
+      padding: 20px;
+    }
+    &__btns {
+      a:nth-child(1) {
+        margin-right: 10px;
+      }
+    }
+    &__decoration {
+      width: 175px;
+      right: -15px;
+    }
+  }
+}

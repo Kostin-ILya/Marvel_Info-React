@@ -93,3 +93,13 @@
     filter: grayscale(0.5);
   }
 }
+
+@media (max-width: 1199px) {
+  .button {
+    font-size: 13px;
+    .inner {
+      padding: 0 15px;
+      line-height: 15px;
+    }
+  }
+}

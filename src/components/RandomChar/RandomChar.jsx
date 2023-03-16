@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import useMarvelService from '../../hooks/useMarvelService'
-import { setContent } from '../../utils/setContent'
+import setContent from '../../utils/setContent'
 
 import mjolnir from '../../resources/img/mjolnir.png'
 import './randomChar.scss'

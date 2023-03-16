@@ -40,3 +40,10 @@
     }
   }
 }
+
+@media (max-width: 1199px) {
+  .single-char {
+    grid-template-columns: 300px 1fr 150px;
+    column-gap: 25px;
+  }
+}
