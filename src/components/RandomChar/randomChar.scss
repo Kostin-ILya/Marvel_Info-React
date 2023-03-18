@@ -48,17 +48,20 @@
     }
   }
   &__title {
+    position: relative;
     font-weight: bold;
     font-size: 24px;
     line-height: 32px;
     letter-spacing: -0.045em;
     color: #ffffff;
+    z-index: 100;
     &:nth-child(2) {
       margin-top: 33px;
     }
   }
   &__decoration {
     position: absolute;
+    float: right;
     bottom: 14px;
     right: -37px;
   }
@@ -77,6 +80,40 @@
     &__decoration {
       width: 175px;
       right: -15px;
+    }
+  }
+}
+@media (max-width: 991px) {
+  .randomchar {
+    grid-template-columns: 55% 45%;
+    &__block {
+      grid-template-columns: auto auto;
+      padding: 10px;
+      gap: 10px;
+    }
+    &__img {
+      width: 160px;
+      height: 190px;
+    }
+    &__title {
+      font-size: 23px;
+      &:nth-child(2) {
+        margin-top: 20px;
+      }
+    }
+    &__info {
+      grid-template-rows: minmax(29px, auto) 1fr 34px;
+      row-gap: 5px;
+      padding-top: 0;
+    }
+
+    &__static {
+      padding: 15px;
+    }
+    &__btns {
+      a:nth-child(1) {
+        margin-right: 3px;
+      }
     }
   }
 }

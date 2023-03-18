@@ -103,3 +103,22 @@
     }
   }
 }
+// @media (max-width: 991px) {
+//   .button {
+//     font-size: 12px;
+//     &__main {
+//       &::before {
+//         height: 7px;
+//         margin-left: 7px;
+//       }
+//       &::after {
+//         height: 7px;
+//         margin-right: 7px;
+//       }
+//     }
+//     .inner {
+//       padding: 0 10px;
+//       line-height: 15px;
+//     }
+//   }
+// }
