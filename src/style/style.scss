@@ -106,3 +106,12 @@ main {
     }
   }
 }
+@media (max-width: 767px) {
+  .app {
+    max-width: 540px;
+    padding: 25px 0;
+    .bg-decoration {
+      display: none;
+    }
+  }
+}

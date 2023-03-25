@@ -36,10 +36,13 @@ const View = ({
           <div className="single-comic__price">{price}</div>
         </div>
         <div className="link-wrapper">
-          <Link to="/comics" className="single-comic__back">
+          <Link to="/comics" className="navigate-link">
             Back to all comics
           </Link>
-          <a onClick={() => navigate(-1)}> Back to previous page</a>
+          <a className="navigate-link" onClick={() => navigate(-1)}>
+            {' '}
+            Back to previous page
+          </a>
         </div>
       </div>
     </>

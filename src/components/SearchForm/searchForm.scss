@@ -23,7 +23,8 @@
       line-height: 21px;
     }
     input {
-      width: 250px;
+      width: 100%;
+      margin-right: 15px;
       padding: 10px;
       font-size: 14px;
     }
@@ -53,6 +54,14 @@
   .char {
     &__form {
       width: auto;
+    }
+  }
+}
+@media (max-width: 767px) {
+  .char {
+    &__form {
+      margin-top: 20px;
+      padding: 20px;
     }
   }
 }

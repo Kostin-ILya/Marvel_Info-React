@@ -34,7 +34,7 @@ const View = ({ data: { name, description, thumbnail }, navigate }) => {
             {description || 'No description'}
           </p>
         </div>
-        <a className="single-char__link_back" onClick={() => navigate(-1)}>
+        <a className="navigate-link" onClick={() => navigate(-1)}>
           Back to previous page
         </a>
       </div>

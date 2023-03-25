@@ -21,17 +21,6 @@
     font-size: 18px;
     line-height: 24px;
   }
-  &__link {
-    &_back {
-      align-self: flex-end;
-      display: block;
-      color: $main-color;
-      cursor: pointer;
-      font-size: 20px;
-      font-weight: 700;
-      text-align: center;
-    }
-  }
   &__comics {
     margin-top: 100px;
     img {
@@ -39,11 +28,26 @@
       height: 300px;
     }
   }
+
+  .navigate-link {
+    align-self: flex-end;
+  }
 }
 
 @media (max-width: 1199px) {
   .single-char {
     grid-template-columns: 300px 1fr 150px;
     column-gap: 25px;
+  }
+}
+@media (max-width: 767px) {
+  .single-char {
+    margin-top: 25px;
+    grid-template-columns: 540px;
+    grid-template-rows: auto minmax(300px, auto) auto;
+    justify-items: center;
+    align-content: center;
+    text-align: center;
+    row-gap: 25px;
   }
 }

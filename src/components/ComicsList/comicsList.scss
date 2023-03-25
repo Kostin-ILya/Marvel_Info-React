@@ -47,3 +47,11 @@
     }
   }
 }
+
+@media (max-width: 767px) {
+  .comics {
+    &__grid {
+      row-gap: 30px;
+    }
+  }
+}
