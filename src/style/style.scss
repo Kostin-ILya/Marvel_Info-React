@@ -115,3 +115,12 @@ main {
     }
   }
 }
+@media (max-width: 575px) {
+  .app {
+    max-width: 100%;
+    padding: 15px 10px;
+    main {
+      margin-top: 15px;
+    }
+  }
+}

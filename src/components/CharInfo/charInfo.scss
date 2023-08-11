@@ -105,3 +105,20 @@
     }
   }
 }
+
+@media (max-width: 575px) {
+  .char {
+    &__content {
+      margin-top: 15px;
+    }
+    &__info {
+      padding: 10px;
+    }
+    &__btns {
+      width: 250px;
+    }
+    &__comics {
+      text-align: center;
+    }
+  }
+}

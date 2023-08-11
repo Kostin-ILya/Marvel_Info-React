@@ -29,3 +29,14 @@
     }
   }
 }
+
+@media (max-width: 575px) {
+  .app {
+    &__header {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      row-gap: 10px;
+    }
+  }
+}

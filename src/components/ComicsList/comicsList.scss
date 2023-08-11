@@ -55,3 +55,13 @@
     }
   }
 }
+@media (max-width: 575px) {
+  .comics {
+    &__grid {
+      row-gap: 30px;
+      grid-template-columns: 225px;
+      justify-items: center;
+      justify-content: center;
+    }
+  }
+}

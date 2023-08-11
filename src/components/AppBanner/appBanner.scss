@@ -30,3 +30,11 @@
     }
   }
 }
+
+@media (max-width: 575px) {
+  .app {
+    &__banner {
+      display: none;
+    }
+  }
+}
