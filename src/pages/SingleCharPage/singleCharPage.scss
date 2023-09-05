@@ -43,8 +43,8 @@
 @media (max-width: 767px) {
   .single-char {
     margin-top: 25px;
-    grid-template-columns: 540px;
-    grid-template-rows: auto minmax(300px, auto) auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(150px, auto) auto;
     justify-items: center;
     align-content: center;
     text-align: center;
